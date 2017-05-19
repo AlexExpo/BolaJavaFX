@@ -1,4 +1,4 @@
-
+import javafx.scene.control.Button;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,14 +38,28 @@ public class JavaFXBolaRoja extends Application
         circulo.setFill(Color.RED);
         contenedor.getChildren().add(circulo);
         
+        
+        
         Timeline timeLine = new Timeline();
         timeLine.setCycleCount(Animation.INDEFINITE);
-        KeyFrame kf = new KeyFrame(Duration.seconds(0.0200), new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent event) {
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.0200), event -> {
+                     {
                         circulo.setTranslateX(circulo.getTranslateX() + direccionEjeX);
                         circulo.setTranslateY(circulo.getTranslateY() + direccionEjey);
                     } 
                 });
+                
+        Button parar = new Button("Parar");
+        parar.setOnAction(event -> {
+            if (timeLine.getStatus() == Animation.Status.RUNNING) {
+                timeLine.stop();
+            }
+            else {
+                timeLine.play();
+            }
+        });
+        
+        contenedor.getChildren().add(parar);
 
         timeLine.getKeyFrames().add(kf);
         timeLine.play();     
